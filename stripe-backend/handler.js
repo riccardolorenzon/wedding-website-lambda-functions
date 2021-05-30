@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 module.exports.checkout = async (event, context, callback) => {
     console.log("Received event:", JSON.stringify(event, null, 2));
     let amount = JSON.parse(event.body).amount * 100;
+    // add stripe fees
     if (typeof amount === "undefined" || isNaN(amount)) {
       amount = 15000;
     }
