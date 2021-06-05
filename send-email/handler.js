@@ -4,12 +4,25 @@
 
 var aws = require("aws-sdk");
 var ses = new aws.SES({
-  region: "eu-central-1",
+  region: "eu-west-1",
 });
 
 module.exports.sendEmail = (event, context, callback) => {
   var message = "";
   let event_json = JSON.parse(event.body);
+  if (event_json['code'] != '12052017'){
+    const response = {
+      statusCode: 403,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        error: 'specified code is not correct',
+      }),
+    };
+    callback(null, response);
+    return;
+  }
   for (var key in event_json) {
     message = message.concat(`${key}: ${event_json[key]} \n`);
   }

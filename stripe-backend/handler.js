@@ -1,5 +1,5 @@
 "use strict";
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_PROD);
 
 module.exports.checkout = async (event, context, callback) => {
     console.log("Received event:", JSON.stringify(event, null, 2));
